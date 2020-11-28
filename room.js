@@ -1,11 +1,10 @@
 const Player = require("./player");
-
-let id = 0;
+const idService = require('./id-service');
 
 module.exports = class Room {
     constructor(params) {
         this._data = {
-            id:++id,
+            id: idService.getId(Room),
             ...params
         };
 

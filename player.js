@@ -1,9 +1,9 @@
-let id = 0;
+const idService = require('./id-service');
 
 module.exports = class Player {
     constructor(params) {
         this._data = {
-            id:++id,
+            id: idService.getId(Player),
             ...params
         };
     }

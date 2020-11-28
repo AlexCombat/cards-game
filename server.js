@@ -1,11 +1,12 @@
 const Rooms = require('./rooms');
+const idService = require('./id-service');
 
 const express = require('express');
 const app = express();
 const port = 7777;
 const hostname = '0.0.0.0';
 
-const rooms = new Rooms();
+let rooms = new Rooms();
 
 app.get('/', (req, res) => {
     res.send('Hello World!')
@@ -61,7 +62,7 @@ app.get('/rooms/:roomId/players/', (req, res, next) => {
     }
 });
 
-app.use('/rooms/:roomId/player/:playerId\*', (req, res, next) => {
+app.use('/rooms/:roomId/players/:playerId\*', (req, res, next) => {
     try {
         const player = req.room.getPlayer(req.params.playerId);
         if (player) {
@@ -88,4 +89,10 @@ const server = app.listen(port, hostname, () => {
     console.log(`Example app listening at http://${hostname}:${port}`)
 });
 
-module.exports = server;
+module.exports = {
+    server,
+    reset: () => {
+        rooms = new Rooms();
+        idService.reset();
+    }
+}
